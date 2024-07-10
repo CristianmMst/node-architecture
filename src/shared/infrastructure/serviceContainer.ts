@@ -1,8 +1,8 @@
 import { UserFindById } from "../../user/application/userFindById";
 import { UserRegister } from "../../user/application/userRegister";
-import { MySqlUserRepository } from "../../user/infrastructure/MySqlUserRepository";
+import { InMemoryUserRepository } from "../../user/infrastructure/InMemoryUserRepository";
 
-const userRepository = new MySqlUserRepository();
+const userRepository = new InMemoryUserRepository();
 
 export const ServiceContainer = {
   user: {
