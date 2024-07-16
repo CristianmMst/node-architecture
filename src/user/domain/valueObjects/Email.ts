@@ -1,4 +1,4 @@
-export class UserPassword {
+export class Email {
   value: string;
 
   constructor(value: string) {
