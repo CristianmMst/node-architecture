@@ -23,19 +23,17 @@ export class Server {
 
   start(): void {
     this.app.use(express.json());
+    this.app.use(this.routes);
 
     this.app.use(
       (err: unknown, _req: Request, res: Response, _next: NextFunction) => {
         if (err instanceof Error) {
-          console.error(err.message);
-          return res.status(500).send(err.message);
+          return res.status(500).json({ message: err.message });
         }
-        console.error(err);
         return res.status(500).send("Something broke!");
       },
     );
 
-    this.app.use(this.routes);
     this.app.listen(this.port, (): void => {
       console.log(`Server running on port ${this.port}`);
     });
