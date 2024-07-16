@@ -1,7 +1,7 @@
 import { User } from "./user";
-import { UserId } from "./valueObjects/userId";
+import { Id } from "./valueObjects/Id";
 
 export interface UserRepository {
   register(user: User): Promise<void>;
-  findById(id: UserId): Promise<User | null>;
+  findById(id: Id): Promise<User | null>;
 }

@@ -1,5 +1,5 @@
 import { User } from "../domain/user";
-import { UserId } from "../domain/valueObjects/userId";
+import { Id } from "../domain/valueObjects/Id";
 import { UserRepository } from "../domain/userRepository";
 import { UserNotFoundError } from "../domain/userNotFoundError";
 
@@ -7,7 +7,7 @@ export class UserFindById {
   constructor(protected readonly userRepository: UserRepository) {}
 
   async run(id: string): Promise<User> {
-    const user = await this.userRepository.findById(new UserId(id));
+    const user = await this.userRepository.findById(new Id(id));
     if (!user) throw new UserNotFoundError("User not found");
     return user;
   }

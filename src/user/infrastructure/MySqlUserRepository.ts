@@ -2,10 +2,10 @@ import { UserRepository } from "../domain/userRepository";
 import mysql, { Pool, RowDataPacket } from "mysql2/promise";
 
 import { User } from "../domain/user";
-import { UserId } from "../domain/valueObjects/userId";
-import { UserName } from "../domain/valueObjects/userName";
-import { UserEmail } from "../domain/valueObjects/userEmail";
-import { UserPassword } from "../domain/valueObjects/userPassword";
+import { Id } from "../domain/valueObjects/Id";
+import { Email } from "../domain/valueObjects/Email";
+import { Username } from "../domain/valueObjects/Username";
+import { Password } from "../domain/valueObjects/Password";
 
 interface MySQLUser extends RowDataPacket {
   id: string;
@@ -25,7 +25,7 @@ export class MySqlUserRepository implements UserRepository {
     });
   }
 
-  async findById(id: UserId): Promise<User | null> {
+  async findById(id: Id): Promise<User | null> {
     const [rows] = await this.client.query<MySQLUser[]>(
       "SELECT * FROM users WHERE id = ?",
       [id],
@@ -33,10 +33,10 @@ export class MySqlUserRepository implements UserRepository {
     if (rows.length === 0) return null;
     const row = rows[0];
     return new User(
-      new UserId(row.id),
-      new UserEmail(row.email),
-      new UserName(row.username),
-      new UserPassword(row.password),
+      new Id(row.id),
+      new Email(row.email),
+      new Username(row.username),
+      new Password(row.password),
     );
   }
 
