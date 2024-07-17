@@ -21,7 +21,7 @@ export class UserController {
   register = async (req: Request, res: Response, next: NextFunction) => {
     const { id, email, username, password } = req.body;
     try {
-      await ServiceContainer.user.register.run(id, username, email, password);
+      await ServiceContainer.user.register.run(id, email, username, password);
       return res.status(200).send();
     } catch (error) {
       next(error);
