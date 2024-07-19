@@ -1,10 +1,6 @@
 import zod from "zod";
 import { User } from "../domain/user";
 import { UserRepository } from "../domain/userRepository";
-import { Id } from "../domain/valueObjects/Id";
-import { Email } from "../domain/valueObjects/Email";
-import { Password } from "../domain/valueObjects/Password";
-import { Username } from "../domain/valueObjects/Username";
 
 const registerUserSchema = zod.object({
   email: zod.string().email(),
@@ -31,12 +27,7 @@ export class UserRegister {
       throw new Error(`${error.issues[0].path} ${error.issues[0].message}`);
     }
 
-    const user = new User(
-      new Id(id),
-      new Email(email),
-      new Username(username),
-      new Password(password),
-    );
+    const user = new User(id, email, username, password);
     return this.userRepository.register(user);
   }
 
