@@ -1,4 +1,5 @@
 import { z, ZodError } from "zod";
+import { capitalize } from "../../../config/capitalize";
 import { Request, Response, NextFunction } from "express";
 
 const userSchema = z.object({
@@ -17,11 +18,9 @@ export const validateUser = (
     next();
   } catch (error) {
     if (error instanceof ZodError) {
-      throw new Error(`${error.issues[0].path} ${error.issues[0].message}`);
-      // res.status(400).json({
-      //   message: "Invalid request",
-      //   errors: error.errors,
-      // });
+      throw new Error(
+        `${capitalize(error.issues[0].path[0].toString())} ${error.issues[0].message}`,
+      );
     } else {
       next(error);
     }
