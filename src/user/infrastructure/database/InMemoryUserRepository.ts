@@ -1,8 +1,12 @@
-import { User } from "../domain/user";
-import { UserRepository } from "../domain/userRepository";
+import { User } from "../../domain/user";
+import { UserRepository } from "../../domain/userRepository";
 
 export class InMemoryUserRepository implements UserRepository {
   private users: User[] = [];
+
+  async getAll(): Promise<User[]> {
+    return this.users;
+  }
 
   async register(user: User): Promise<void> {
     this.users.push(user);

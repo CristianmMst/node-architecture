@@ -1,9 +1,18 @@
 import { NextFunction, Request, Response } from "express";
-import { UserNotFoundError } from "../domain/userNotFoundError";
-import { ServiceContainer } from "../../shared/infrastructure/serviceContainer";
+import { UserNotFoundError } from "../../domain/userNotFoundError";
+import { ServiceContainer } from "../../../shared/infrastructure/serviceContainer";
 
 export class UserController {
   constructor() {}
+
+  getAll = async (_req: Request, res: Response, next: NextFunction) => {
+    try {
+      const users = await ServiceContainer.user.getAll.run();
+      return res.json(users);
+    } catch (error) {
+      next(error);
+    }
+  };
 
   findById = async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
@@ -19,9 +28,9 @@ export class UserController {
   };
 
   register = async (req: Request, res: Response, next: NextFunction) => {
-    const { id, email, username, password } = req.body;
+    const { email, password, username } = req.body;
     try {
-      await ServiceContainer.user.register.run(id, email, username, password);
+      await ServiceContainer.user.register.run(email, username, password);
       return res.status(200).send();
     } catch (error) {
       next(error);

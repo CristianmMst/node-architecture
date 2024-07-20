@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { UserRoutes } from "./user/infrastructure/userRoutes";
+import { UserRoutes } from "./user/infrastructure/routes/userRoutes";
 
 export class AppRoutes {
   constructor() {}
