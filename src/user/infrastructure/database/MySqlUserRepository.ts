@@ -35,7 +35,7 @@ export class MySqlUserRepository implements UserRepository {
     return new User(row.email, row.username, row.password);
   }
 
-  async register(user: User): Promise<void> {
+  async save(user: User): Promise<void> {
     await this.client.query(
       "INSERT INTO users (id, email, username, password) VALUES (?, ?, ?, ?)",
       [user.id, user.email, user.username, user.password],

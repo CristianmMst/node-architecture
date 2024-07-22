@@ -30,7 +30,7 @@ export class UserController {
   register = async (req: Request, res: Response, next: NextFunction) => {
     const { email, password, username } = req.body;
     try {
-      await ServiceContainer.user.register.run(email, username, password);
+      await ServiceContainer.user.save.run(email, username, password);
       return res.status(200).send();
     } catch (error) {
       next(error);

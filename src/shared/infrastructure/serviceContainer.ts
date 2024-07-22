@@ -7,8 +7,8 @@ const userRepository = new InMemoryUserRepository();
 
 export const ServiceContainer = {
   user: {
+    save: new UserRegister(userRepository),
     getAll: new GetAllUsers(userRepository),
-    register: new UserRegister(userRepository),
     findById: new UserFindById(userRepository),
   },
 };

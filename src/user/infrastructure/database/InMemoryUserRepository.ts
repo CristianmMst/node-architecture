@@ -8,7 +8,7 @@ export class InMemoryUserRepository implements UserRepository {
     return this.users;
   }
 
-  async register(user: User): Promise<void> {
+  async save(user: User): Promise<void> {
     this.users.push(user);
   }
 
