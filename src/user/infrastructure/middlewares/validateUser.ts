@@ -1,6 +1,6 @@
 import { z, ZodError } from "zod";
-import { capitalize } from "../../../config/capitalize";
 import { Request, Response, NextFunction } from "express";
+import { capitalize } from "../../../shared/utils/capitalize";
 
 const userSchema = z.object({
   email: z.string().email(),
