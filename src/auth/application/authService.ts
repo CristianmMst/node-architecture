@@ -1,14 +1,17 @@
-import { AuthRepository } from "../domain/authRepository";
+import { User } from "../../user/domain/user";
+import { hashPassword } from "../../shared/utils/hash";
+import { UserRepository } from "../../user/domain/userRepository";
 
 export class AuthService {
-  constructor(private readonly authRepository: AuthRepository) {}
-  register = (user: any) => {
-    this.authRepository.register(user);
-    return "Register";
+  constructor(private readonly userRepository: UserRepository) {}
+
+  register = async (userData: User): Promise<void> => {
+    const hashedPassword = await hashPassword(userData.password);
+    const user = new User(userData.email, userData.username, hashedPassword);
+    return this.userRepository.save(user);
   };
 
   login = ({ email, password }: any) => {
-    this.authRepository.login(email, password);
-    return "Login";
+    // return this.userRepository.login(email, password);
   };
 }
