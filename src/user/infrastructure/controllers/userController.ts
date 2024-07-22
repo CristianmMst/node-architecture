@@ -26,14 +26,4 @@ export class UserController {
       next(error);
     }
   };
-
-  register = async (req: Request, res: Response, next: NextFunction) => {
-    const { email, password, username } = req.body;
-    try {
-      await ServiceContainer.user.save.run(email, username, password);
-      return res.status(200).send();
-    } catch (error) {
-      next(error);
-    }
-  };
 }
