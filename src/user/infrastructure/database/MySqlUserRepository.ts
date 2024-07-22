@@ -1,6 +1,6 @@
-import { User } from "../domain/user";
-import { UserRepository } from "../domain/userRepository";
 import mysql, { Pool, RowDataPacket } from "mysql2/promise";
+import { User } from "../../domain/user";
+import { UserRepository } from "../../domain/userRepository";
 
 interface MySQLUser extends RowDataPacket {
   id: string;
