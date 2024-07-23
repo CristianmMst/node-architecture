@@ -1,6 +1,7 @@
 import { User } from "../../user/domain/user";
-import { hashPassword } from "../../shared/utils/hash";
 import { UserRepository } from "../../user/domain/userRepository";
+import { comparePassword, hashPassword } from "../../shared/utils/hash";
+import { UserNotFoundError } from "../../user/domain/userNotFoundError";
 
 export class AuthService {
   constructor(private readonly userRepository: UserRepository) {}
@@ -8,10 +9,14 @@ export class AuthService {
   register = async (userData: User): Promise<void> => {
     const hashedPassword = await hashPassword(userData.password);
     const user = new User(userData.email, userData.username, hashedPassword);
-    return this.userRepository.save(user);
+    await this.userRepository.save(user);
   };
 
-  login = ({ email, password }: any) => {
-    // return this.userRepository.login(email, password);
+  login = async ({ email, password }: User) => {
+    const user = await this.userRepository.findByEmail(email);
+    if (!user) throw new UserNotFoundError("User not found");
+    const isPasswordCorrect = await comparePassword(password, user.password);
+    if (!isPasswordCorrect) throw new Error("Incorrect password");
+    return user;
   };
 }

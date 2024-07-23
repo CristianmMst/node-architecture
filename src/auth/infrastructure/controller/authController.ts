@@ -12,10 +12,11 @@ export class AuthController {
     }
   };
 
-  login = (req: Request, res: Response, next: NextFunction) => {
+  login = async (req: Request, res: Response, next: NextFunction) => {
+    const user = req.body;
     try {
-      const { email, password } = req.body;
-      return res.status(200).send({ email, password });
+      await ServiceContainer.authService.login(user);
+      return res.status(200).send(user);
     } catch (error) {
       next(error);
     }
