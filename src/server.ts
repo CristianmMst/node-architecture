@@ -1,10 +1,5 @@
-import express, {
-  Router,
-  Request,
-  Response,
-  Application,
-  NextFunction,
-} from "express";
+import express, { Router, Application } from "express";
+import { errorHandler } from "./shared/infrastructure/middlewares/errorHandler";
 
 interface ServerOptions {
   port?: number;
@@ -12,9 +7,9 @@ interface ServerOptions {
 }
 
 export class Server {
-  private readonly app: Application = express();
   private readonly port: number;
   private readonly routes: Router;
+  private readonly app: Application = express();
 
   constructor({ port = 3000, routes }: ServerOptions) {
     this.port = port;
@@ -25,14 +20,7 @@ export class Server {
     this.app.use(express.json());
     this.app.use(this.routes);
 
-    this.app.use(
-      (err: unknown, _req: Request, res: Response, _next: NextFunction) => {
-        if (err instanceof Error) {
-          return res.status(500).json({ message: err.message });
-        }
-        return res.status(500).send("Something broke!");
-      },
-    );
+    this.app.use(errorHandler);
 
     this.app.listen(this.port, (): void => {
       console.log(`Server running on port ${this.port}`);
