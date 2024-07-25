@@ -15,8 +15,8 @@ export class AuthController {
   login = async (req: Request, res: Response, next: NextFunction) => {
     const user = req.body;
     try {
-      await ServiceContainer.authService.login(user);
-      return res.status(200).send(user);
+      const token = await ServiceContainer.authService.login(user);
+      return res.status(200).json({ token });
     } catch (error) {
       next(error);
     }
