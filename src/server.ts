@@ -1,5 +1,6 @@
-import express, { Router, Application } from "express";
+import cors from "cors";
 import cookieParser from "cookie-parser";
+import express, { Router, Application } from "express";
 import { errorHandler } from "./shared/infrastructure/middlewares/errorHandler";
 
 interface ServerOptions {
@@ -18,6 +19,7 @@ export class Server {
   }
 
   start(): void {
+    this.app.use(cors());
     this.app.use(express.json());
     this.app.use(cookieParser());
     this.app.use(this.routes);
