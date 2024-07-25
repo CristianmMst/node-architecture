@@ -13,7 +13,7 @@ export class User {
     this.password = password;
   }
 
-  uuid(): string {
+  private uuid(): string {
     return crypto.randomUUID();
   }
 }
