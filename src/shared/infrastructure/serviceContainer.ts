@@ -4,6 +4,7 @@ import { GetAllUsers } from "../../user/application/getAllUsers";
 import { UserFindById } from "../../user/application/userFindById";
 import { InMemoryUserRepository } from "../../user/infrastructure/database/InMemoryUserRepository";
 
+const tokenService = new TokenService();
 const userRepository = new InMemoryUserRepository();
 
 export const ServiceContainer = {
@@ -11,5 +12,5 @@ export const ServiceContainer = {
     getAll: new GetAllUsers(userRepository),
     findById: new UserFindById(userRepository),
   },
-  authService: new AuthService(userRepository, new TokenService()),
+  authService: new AuthService(tokenService, userRepository),
 };
