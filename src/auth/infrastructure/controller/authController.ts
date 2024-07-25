@@ -16,7 +16,10 @@ export class AuthController {
     const user = req.body;
     try {
       const token = await ServiceContainer.authService.login(user);
-      return res.status(200).json({ token });
+      return res
+        .cookie("access_token", token, { httpOnly: true })
+        .status(200)
+        .json({ token });
     } catch (error) {
       next(error);
     }
