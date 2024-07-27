@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from "express";
-import { UserNotFoundError } from "../../domain/exceptions/userNotFoundError";
 import { ServiceContainer } from "../../../shared/infrastructure/serviceContainer";
 
 export class UserController {
@@ -20,9 +19,6 @@ export class UserController {
       const user = await ServiceContainer.user.findById.run(id);
       return res.json(user);
     } catch (error) {
-      if (error instanceof UserNotFoundError) {
-        return res.status(404).json(error.message);
-      }
       next(error);
     }
   };

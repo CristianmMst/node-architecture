@@ -1,6 +1,6 @@
 import { User } from "../domain/user";
-import { UserNotFoundError } from "../domain/userNotFoundError";
 import { UserRepository } from "../domain/userRepository";
+import { UserNotFoundError } from "../domain/exceptions/userNotFoundError";
 
 export class UserFindByEmail {
   constructor(private readonly userRepository: UserRepository) {}
