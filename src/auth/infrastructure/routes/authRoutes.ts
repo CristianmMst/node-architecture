@@ -9,6 +9,7 @@ export class AuthRoutes {
 
     router.post("/login", authController.login);
     router.post("/register", validateUser, authController.register);
+    router.post("/logout", authController.logout);
 
     return router;
   }
