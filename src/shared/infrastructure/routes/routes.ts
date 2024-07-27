@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { UserRoutes } from "./user/infrastructure/routes/userRoutes";
-import { AuthRoutes } from "./auth/infrastructure/routes/authRoutes";
+import { AuthRoutes } from "../../../auth/infrastructure/routes/authRoutes";
+import { UserRoutes } from "../../../user/infrastructure/routes/userRoutes";
 
 export class AppRoutes {
   constructor() {}
