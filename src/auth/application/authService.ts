@@ -13,6 +13,10 @@ export class AuthService {
 
   register = async (userData: RegisterUserDto): Promise<void> => {
     const hashedPassword = await hashPassword(userData.password);
+    const userExists = await this.userRepository.findByEmail(userData.email);
+
+    // Exeption
+    if (userExists) throw new Error("User already exists");
     const user = new User(userData.email, userData.username, hashedPassword);
     await this.userRepository.save(user);
   };
