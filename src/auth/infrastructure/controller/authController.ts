@@ -24,4 +24,15 @@ export class AuthController {
       next(error);
     }
   };
+
+  logout = async (_req: Request, res: Response, next: NextFunction) => {
+    try {
+      res.clearCookie("access_token");
+      return res.status(200).json({
+        message: "You have been logged out",
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
 }
