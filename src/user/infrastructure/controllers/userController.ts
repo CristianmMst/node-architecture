@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { UserNotFoundError } from "../../domain/userNotFoundError";
+import { UserNotFoundError } from "../../domain/exceptions/userNotFoundError";
 import { ServiceContainer } from "../../../shared/infrastructure/serviceContainer";
 
 export class UserController {
