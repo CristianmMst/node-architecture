@@ -22,7 +22,9 @@ export class MySqlUserRepository implements UserRepository {
 
   async getAll(): Promise<User[]> {
     const [rows] = await this.client.query<MySQLUser[]>("SELECT * FROM users");
-    return rows.map((row) => new User(row.email, row.username, row.password));
+    return rows.map(
+      (row) => new User(row.email, row.username, row.password, row.id),
+    );
   }
 
   async findById(id: string): Promise<User | null> {
@@ -32,17 +34,17 @@ export class MySqlUserRepository implements UserRepository {
     );
     if (rows.length === 0) return null;
     const row = rows[0];
-    return new User(row.email, row.username, row.password);
+    return new User(row.email, row.username, row.password, row.id);
   }
 
   async findByEmail(email: string): Promise<User | null> {
     const [rows] = await this.client.query<MySQLUser[]>(
-      "SELECT * FROM users WHERE id = ?",
+      "SELECT * FROM users WHERE email = ?",
       [email],
     );
     if (rows.length === 0) return null;
     const row = rows[0];
-    return new User(row.email, row.username, row.password);
+    return new User(row.email, row.username, row.password, row.id);
   }
 
   async save(user: User): Promise<void> {
