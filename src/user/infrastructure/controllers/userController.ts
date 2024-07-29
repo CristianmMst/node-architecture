@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { RequestAuth } from "../../../auth/types/RequestAuth";
 import { ServiceContainer } from "../../../shared/infrastructure/serviceContainer";
 
 export class UserController {
@@ -13,11 +14,11 @@ export class UserController {
     }
   };
 
-  findById = async (req: Request, res: Response, next: NextFunction) => {
-    const { id } = req.params;
+  getProfile = async (req: RequestAuth, res: Response, next: NextFunction) => {
     try {
+      const { id } = req.user!;
       const user = await ServiceContainer.user.findById.run(id);
-      return res.json(user);
+      return res.status(200).json(user);
     } catch (error) {
       next(error);
     }
