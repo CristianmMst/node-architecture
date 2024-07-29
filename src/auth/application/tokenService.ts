@@ -8,7 +8,6 @@ export class TokenService implements AuthRepository {
   }
 
   validateToken(token: string) {
-    const validToken = jwt.verify(token, jwtSecret);
-    return validToken as JwtPayload;
+    return jwt.verify(token, jwtSecret) as JwtPayload;
   }
 }

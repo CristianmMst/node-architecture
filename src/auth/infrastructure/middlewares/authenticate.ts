@@ -13,7 +13,7 @@ export const authenticate = (
   const token = req.cookies.access_token;
   try {
     const user = tokenService.validateToken(token);
-    req.user = user;
+    req.user = { id: user.id };
     next();
   } catch (error) {
     throw new InvalidToken();
