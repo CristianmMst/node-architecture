@@ -1,6 +1,7 @@
 import { User } from "../../domain/user";
-import mysql, { Pool, RowDataPacket } from "mysql2/promise";
+import { Pool, RowDataPacket } from "mysql2/promise";
 import { UserRepository } from "../../domain/userRepository";
+import { pool } from "../../../shared/infrastructure/database/mysqlClient";
 
 interface MySQLUser extends RowDataPacket {
   id: string;
@@ -10,15 +11,7 @@ interface MySQLUser extends RowDataPacket {
 }
 
 export class MySqlUserRepository implements UserRepository {
-  private readonly client: Pool;
-  constructor() {
-    this.client = mysql.createPool({
-      host: "localhost",
-      user: "root",
-      password: "melannie123",
-      database: "prueba",
-    });
-  }
+  private readonly client: Pool = pool;
 
   async getAll(): Promise<User[]> {
     const [rows] = await this.client.query<MySQLUser[]>("SELECT * FROM users");
