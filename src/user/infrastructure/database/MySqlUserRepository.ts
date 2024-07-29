@@ -1,5 +1,5 @@
-import mysql, { Pool, RowDataPacket } from "mysql2/promise";
 import { User } from "../../domain/user";
+import mysql, { Pool, RowDataPacket } from "mysql2/promise";
 import { UserRepository } from "../../domain/userRepository";
 
 interface MySQLUser extends RowDataPacket {
@@ -29,6 +29,16 @@ export class MySqlUserRepository implements UserRepository {
     const [rows] = await this.client.query<MySQLUser[]>(
       "SELECT * FROM users WHERE id = ?",
       [id],
+    );
+    if (rows.length === 0) return null;
+    const row = rows[0];
+    return new User(row.email, row.username, row.password);
+  }
+
+  async findByEmail(email: string): Promise<User | null> {
+    const [rows] = await this.client.query<MySQLUser[]>(
+      "SELECT * FROM users WHERE id = ?",
+      [email],
     );
     if (rows.length === 0) return null;
     const row = rows[0];
